@@ -1,0 +1,85 @@
+﻿@using System.Security.Claims
+@model IEnumerable<ProyectoFinalWebnet.Models.LibroViewModel>
+
+@{
+    ViewData["Title"] = "Listado de Libros";
+}
+
+<h1>Listado de libros</h1>
+
+
+
+<form method="get" class="row g-3">
+    <div class="col-md-6">
+        <label for="searchString" class="form-label visually-hidden">Buscar por Título:</label>
+        <input type="text" class="form-control form-control-sm" id="searchString" name="searchString" value="@ViewData["CurrentFilter"]" placeholder="Buscar por Título" />
+    </div>
+    <div class="col-md-2">
+        <button type="submit" class="btn btn-primary btn-sm">Buscar</button>
+    </div>
+    <br />
+</form>
+
+@if (User.IsInRole("Manager"))
+{
+    <br />
+    <a class="btn btn-info ml-1" asp-action="Create">Registrar libro</a>
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Título</th>
+            <th>Autor</th>
+            <th>Género</th>
+            <th>ISBN</th>
+            <th>Fecha de Publicación</th>
+            <th>Editorial</th>
+            <th>Cantidad</th>
+            <th>Total de Copias</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(modelItem => item.Libro.Titulo)</td>
+                <td>@Html.DisplayFor(modelItem => item.Libro.Autor)</td>
+                <td>
+                    @if (item.SelectedCategoriaId != 0)
+                    {
+                        var categoria = item.Categorias.FirstOrDefault(c => c.Value == item.SelectedCategoriaId.ToString());
+                        if (categoria != null)
+                        {
+                            @Html.DisplayFor(modelItem => categoria.Text)
+                        }
+                    }
+                </td>
+                <td>@Html.DisplayFor(modelItem => item.Libro.ISBN)</td>
+                <td>@Html.DisplayFor(modelItem => item.Libro.FechaPublicacion)</td>
+                <td>@Html.DisplayFor(modelItem => item.Libro.Editorial)</td>
+                <td>@Html.DisplayFor(modelItem => item.Libro.Cantidad)</td>
+                <td>@Html.DisplayFor(modelItem => item.Libro.TotalCopias)</td>
+                <td>
+                    @if (User.IsInRole("Manager"))
+                    {
+                        <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Libro.ID">Edit</a>
+                        <a class="btn btn-danger ml-1" asp-action="Delete" asp-route-id="@item.Libro.ID">Delete</a>
+
+                    }
+
+                    @if (User.IsInRole("User") && !item.TienePrestamoActivo)
+                    {
+                        <form asp-action="PrestarLibro" asp-route-libroId="@item.Libro.ID" method="post" class="d-inline">
+                            <button type="submit" class="btn btn-primary">Prestar</button>
+                        </form>
+                    }
+
+                    <a class="btn btn-info ml-1" asp-action="Details" asp-route-id="@item.Libro.ID">Details</a>
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

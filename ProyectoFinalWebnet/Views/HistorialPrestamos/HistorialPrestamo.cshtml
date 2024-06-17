@@ -1,0 +1,44 @@
+﻿@model IEnumerable<ProyectoFinalWebnet.Models.HistorialPrestamos>
+
+@{
+    ViewData["Title"] = "Historial de Préstamos";
+}
+
+<h1>Historial de Préstamos</h1>
+
+<div class="row g-3">
+    <div class="col-md-6">
+        <form method="get" class="d-flex">
+            <label for="searchString" class="visually-hidden">Buscar por Nombre de Usuario:</label>
+            <input type="text" class="form-control form-control-sm me-2" id="searchString" name="searchString" value="@ViewData["CurrentFilter"]" placeholder="Buscar por Nombre de Usuario" />
+            <button type="submit" class="btn btn-primary btn-sm">Buscar</button>
+        </form>
+    </div>
+</div>
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Libro ID</th>
+            <th>Usuario ID</th>
+            <th>Nombre de Usuario</th>
+            <th>Fecha de Préstamo</th>
+            <th>Fecha de Devolución Real</th>
+            <th>Estado</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.LibroID</td>
+                <td>@item.UsuarioID</td>
+                <td>@item.UserName</td>
+                <td>@item.FechaPrestamos.ToString("dd/MM/yyyy")</td>
+                <td>@item.DevolucionReal.ToString("dd/MM/yyyy")</td>
+                <td>@item.Estado</td>
+            </tr>
+        }
+    </tbody>
+</table>

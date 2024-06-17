@@ -1,0 +1,25 @@
+﻿@model ProyectoFinalWebnet.Models.Prestamos
+
+@{
+    ViewData["Title"] = "Mi Préstamo";
+}
+
+<h1>Mi Préstamo</h1>
+
+<div>
+    <h4>Detalles del Préstamo:</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-3">Título del Libro:</dt>
+        <dd class="col-sm-9">@Model.Libros.Titulo</dd>
+
+        <dt class="col-sm-3">Fecha de Préstamo:</dt>
+        <dd class="col-sm-9">@Model.FechaPrestamos.ToString("dd/MM/yyyy")</dd>
+
+        <dt class="col-sm-3">Estado:</dt>
+        <dd class="col-sm-9">@Model.Estado</dd>
+    </dl>
+</div>
+
+<a asp-controller="Home" asp-action="Index" class="btn btn-primary">Volver al Inicio</a>
+

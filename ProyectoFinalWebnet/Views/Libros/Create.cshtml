@@ -1,0 +1,107 @@
+﻿@model ProyectoFinalWebnet.Models.LibroViewModel
+
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+
+
+<h4>Ingresar nuevo Libro</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Create">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Libro.Titulo" class="control-label"></label>
+                <input asp-for="Libro.Titulo" class="form-control" id="Libro_Titulo" />
+                <span asp-validation-for="Libro.Titulo" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Libro.Autor" class="control-label"></label>
+                <input asp-for="Libro.Autor" class="form-control" id="Libro_Autor" />
+                <span asp-validation-for="Libro.Autor" class="text-danger"></span>
+            </div>
+           
+            <div class="form-group">
+                <label asp-for="Libro.ISBN" class="control-label"></label>
+                <input asp-for="Libro.ISBN" class="form-control" id="Libro_ISBN" />
+                <span asp-validation-for="Libro.ISBN" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Libro.FechaPublicacion" class="control-label"></label>
+                <input asp-for="Libro.FechaPublicacion" class="form-control" id="Libro_FechaPublicacion" />
+                <span asp-validation-for="Libro.FechaPublicacion" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Libro.Editorial" class="control-label"></label>
+                <input asp-for="Libro.Editorial" class="form-control" id="Libro_Editorial" />
+                <span asp-validation-for="Libro.Editorial" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Libro.Cantidad" class="control-label"></label>
+                <input asp-for="Libro.Cantidad" class="form-control" id="Libro_Cantidad" />
+                <span asp-validation-for="Libro.Cantidad" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Libro.TotalCopias" class="control-label"></label>
+                <input asp-for="Libro.TotalCopias" class="form-control" id="Libro_TotalCopias" />
+                <span asp-validation-for="Libro.TotalCopias" class="text-danger"></span>
+            </div>
+
+            <div class="mb-3">
+                <label for="categoria" class="form-label">Categoría:</label>
+                <select asp-for="SelectedCategoriaId" class="form-control" id="Libro_Id_categoria">
+                    @foreach (var categoria in Model.Categorias)
+                    {
+                        <option value="@categoria.Value">@categoria.Text</option>
+                    }
+                </select>
+                <span asp-validation-for="SelectedCategoriaId" class="text-danger"></span>
+            </div>
+            <br />
+
+            <div class="form-group">
+                <input type="submit" id="btnguarda" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+<br/>
+<div>
+    <a class="btn btn-info" asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            
+            var botonGuardar = document.getElementById("btnguarda");
+
+
+            var titulo = document.getElementById("Libro_Titulo").value;
+            var autor = document.getElementById("Libro_Autor").value;
+            var genero = document.getElementById("Libro_Genero").value;
+            var isbn = document.getElementById("Libro_ISBN").value;
+            var fechaPublicacion = document.getElementById("Libro_FechaPublicacion").value;
+            var editorial = document.getElementById("Libro_Editorial").value;
+            var cantidad = document.getElementById("Libro_Cantidad").value;
+            var totalCopias = document.getElementById("Libro_TotalCopias").value;
+            var idCategoria = document.getElementById("Libro_Id_categoria").value;
+
+            // Imprimir los valores en la consola
+            console.log("Título:", titulo);
+            console.log("Autor:", autor);
+            console.log("Género:", genero);
+            console.log("ISBN:", isbn);
+            console.log("Fecha de Publicación:", fechaPublicacion);
+            console.log("Editorial:", editorial);
+            console.log("Cantidad:", cantidad);
+            console.log("Total de Copias:", totalCopias);
+            console.log("ID de Categoría:", idCategoria);
+        });
+    </script>
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

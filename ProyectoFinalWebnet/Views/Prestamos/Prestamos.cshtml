@@ -1,0 +1,51 @@
+﻿@model List<ProyectoFinalWebnet.Models.Prestamos>
+
+@{
+    ViewData["Title"] = "Listado de Préstamos";
+}
+
+<h1>Listado de Préstamos</h1>
+
+<div class="row g-3">
+    <div class="col-md-6">
+        <form method="get" action="@Url.Action("Prestamos", "Prestamos")" class="d-flex">
+            <label for="userName" class="visually-hidden">Buscar por Nombre de Usuario:</label>
+            <input type="text" class="form-control form-control-sm me-2" id="userName" name="userName" placeholder="Buscar por Nombre de Usuario">
+            <button type="submit" class="btn btn-primary btn-sm">Buscar</button>
+        </form>
+    </div>
+</div>
+
+
+
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Libro</th>
+            <th>Usuario</th>
+            <th>Fecha de Préstamo</th>
+            <th>Estado</th>
+            <th>Acciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var prestamo in Model)
+        {
+            <tr>
+                <td>@prestamo.Libros.Titulo</td>
+                <td>@prestamo.UserName</td>
+                <td>@prestamo.FechaPrestamos.ToString("dd/MM/yyyy")</td>
+                <td>@prestamo.Estado</td>
+                <td>
+                    @if (User.IsInRole("Manager"))
+                    {
+                        <form asp-action="DevolverLibro" asp-route-prestamoId="@prestamo.ID" method="post">
+                            <button type="submit" class="btn btn-success ml-1">Devolver Libro</button>
+                        </form>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
